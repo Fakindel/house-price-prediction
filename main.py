@@ -1,26 +1,14 @@
 import pandas as pd
-import numpy as np
 
 from src.data import load_data, clean_data
+from src.train import models, train_all_models
+from src.evaluate import evaluate_models
 
 from sklearn.model_selection import train_test_split
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.impute import SimpleImputer
 from sklearn.pipeline import Pipeline
-
-from sklearn.linear_model import LinearRegression
-from sklearn.ensemble import (
-    RandomForestRegressor,
-    GradientBoostingRegressor,
-    ExtraTreesRegressor
-)
-
-from sklearn.metrics import (
-    mean_absolute_error,
-    mean_squared_error,
-    r2_score
-)
 
 
 # ============================================================
@@ -177,84 +165,40 @@ print(
 
 
 # ============================================================
-# 12. CREATE MODELS
+# 12. TRAIN ALL MODELS
 # ============================================================
 
-models = {
-    "Linear Regression": LinearRegression(),
-
-    "Random Forest": RandomForestRegressor(
-        n_estimators=300,
-        random_state=42,
-        n_jobs=-1
-    ),
-
-    "Gradient Boosting": GradientBoostingRegressor(
-        n_estimators=300,
-        random_state=42
-    ),
-
-    "Extra Trees": ExtraTreesRegressor(
-        n_estimators=300,
-        random_state=42,
-        n_jobs=-1
-    )
-}
+trained_models = train_all_models(
+    models,
+    X_train_processed,
+    y_train
+)
 
 
 # ============================================================
-# 13. TRAIN + EVALUATE MODELS
+# 13. EVALUATE ALL MODELS
 # ============================================================
 
-results = []
-
-for name, model in models.items():
-
-    print(f"\nTraining {name}...")
-
-    # Train
-    model.fit(
-        X_train_processed,
-        y_train
-    )
-
-    # Predict
-    predictions = model.predict(
-        X_test_processed
-    )
-
-    # Metrics
-    mae = mean_absolute_error(
-        y_test,
-        predictions
-    )
-
-    rmse = np.sqrt(
-        mean_squared_error(
-            y_test,
-            predictions
-        )
-    )
-
-    r2 = r2_score(
-        y_test,
-        predictions
-    )
-
-    # Store results
-    results.append({
-        "Model": name,
-        "MAE": mae,
-        "RMSE": rmse,
-        "R2": r2
-    })
+result = evaluate_models(
+    trained_models,
+    X_test_processed,
+    y_test
+)
 
 
 # ============================================================
 # 14. MODEL COMPARISON
 # ============================================================
 
-results_df = pd.DataFrame(results)
+results_df = pd.DataFrame(
+    result,
+    columns=[
+        "Model",
+        "MAE",
+        "RMSE",
+        "R2"
+    ]
+)
 
 print(
     "\n================ MODEL COMPARISON ================"
