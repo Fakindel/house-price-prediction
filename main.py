@@ -1,11 +1,10 @@
 import pandas as pd
-<<<<<<< HEAD
-=======
+
 import joblib
 import numpy as np
 from src.train import build_model_pipeline
 from sklearn.model_selection import cross_val_score
->>>>>>> 3c2439e (done)
+
 
 from src.data import load_data, clean_data
 from src.train import models, train_all_models
@@ -17,8 +16,7 @@ from sklearn.preprocessing import OneHotEncoder
 from sklearn.impute import SimpleImputer
 from sklearn.pipeline import Pipeline
 
-<<<<<<< HEAD
-=======
+
 from sklearn.linear_model import LinearRegression
 from sklearn.ensemble import (
     RandomForestRegressor,
@@ -34,7 +32,7 @@ from sklearn.metrics import (
     
 )
 
->>>>>>> 3c2439e (done)
+
 
 # ============================================================
 # 1. LOAD DATA

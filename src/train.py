@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 
 from sklearn.linear_model import LinearRegression
 from sklearn.ensemble import (
@@ -27,9 +26,6 @@ models = {
         n_jobs=-1
     )
 }
-=======
-from sklearn.pipeline import Pipeline
->>>>>>> 3c2439e (done)
 def train_model(model, X_train, y_train):
     model.fit(X_train, y_train)
     return model
@@ -37,20 +33,7 @@ def train_model(model, X_train, y_train):
 def train_all_models(models, X_train, y_train):
     result = []
     for name, model in models.items():
-<<<<<<< HEAD
         trained_model = train_model(models, X_train, y_train)
 
     result.append((name, trained_model))
     return result
-=======
-        model.fit(X_train, y_train)
-        result.append((name, model))
-    return result
- 
-def build_model_pipeline(preprocessor, model):
-    model_pipeline = Pipeline ([
-        ("preprocessor", preprocessor),
-        ("model", model)
-    ])
-    return model_pipeline
->>>>>>> 3c2439e (done)
